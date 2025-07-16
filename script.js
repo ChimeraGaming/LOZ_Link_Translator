@@ -1,6 +1,5 @@
 const gruntMap = GRUNT_MAP;
 const reverseMap = REVERSE_MAP;
-let totalTranslations = 0;
 
 function runTranslation() {
   const input = document.getElementById("input").value.trim().toLowerCase();
@@ -17,30 +16,24 @@ function runTranslation() {
     if (mode === "eng-to-grunt") {
       return gruntMap[word] || word;
     } else {
-      return Object.entries(gruntMap).find(([, val]) => val === word)?.[0] || word;
+      // Fix: Check for matching value in gruntMap and return its key
+      const match = Object.keys(gruntMap).find(key => gruntMap[key].toLowerCase() === word.toLowerCase());
+      return match || word;
     }
   });
 
-  const result = translated.join(" ");
-  outputDiv.innerText = result;
-  totalTranslations++;
+  outputDiv.innerText = translated.join(" ");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("translateBtn");
-  const copyBtn = document.getElementById("copyBtn");
-
-  btn.addEventListener("click", () => {
-    btn.classList.add("clicked");
-    setTimeout(() => btn.classList.remove("clicked"), 150);
+  document.getElementById("translateBtn").addEventListener("click", () => {
     runTranslation();
   });
 
-  copyBtn.addEventListener("click", () => {
-    const text = document.getElementById("output").innerText;
-    navigator.clipboard.writeText(text).then(() => {
-      copyBtn.innerText = "Copied!";
-      setTimeout(() => copyBtn.innerText = "Copy", 1200);
+  document.getElementById("copyBtn").addEventListener("click", () => {
+    const output = document.getElementById("output").innerText;
+    navigator.clipboard.writeText(output).then(() => {
+      alert("Copied!");
     });
   });
 });
