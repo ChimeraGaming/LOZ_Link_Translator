@@ -1,4 +1,4 @@
-{
+const gruntMap = {
   "the": "Wah-Hyaa-Hrah-Hut",
   "and": "Ho-Tyaa-Ugh-Haah",
   "for": "Heeyah-Hrah-Hya-Hut",
@@ -9463,4 +9463,4 @@
   "mediawiki": "Heeyah-Ho-Hya-Heeyah",
   "configurations": "Ho-Gyaa-Gyaa-Haah",
   "poison": "Hya-Hrah-Nyaa-Yah"
-}
+};

@@ -36,7 +36,10 @@ h1 {
   margin-bottom: 1rem;
 }
 
-select, textarea, button {
+select,
+textarea,
+input,
+button {
   margin-top: 1rem;
   font-size: 1rem;
   padding: 0.7rem;
@@ -49,6 +52,17 @@ select, textarea, button {
 textarea {
   min-height: 100px;
   resize: vertical;
+}
+
+input#output {
+  margin-top: 1rem;
+  background: #fffef0;
+  border: 1px solid #ccc;
+  font-size: 1.2rem;
+  padding: 0.8rem;
+  border-radius: 8px;
+  width: 90%;
+  text-align: center;
 }
 
 button {
@@ -64,18 +78,8 @@ button:hover {
   background: #245424;
 }
 
-button:active {
+button.pressed {
   transform: scale(0.96);
   background: #1d4b1a;
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
-}
-
-#output {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  background: #fffef0;
-  padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  word-wrap: break-word;
 }

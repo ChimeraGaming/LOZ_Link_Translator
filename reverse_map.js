@@ -1,4 +1,4 @@
-{
+const reverseMap = {
   "Wah-Hyaa-Hrah-Hut": "the",
   "Ho-Tyaa-Ugh-Haah": "and",
   "Heeyah-Hrah-Hya-Hut": "for",
@@ -9463,4 +9463,4 @@
   "Heeyah-Ho-Hya-Heeyah": "mediawiki",
   "Ho-Gyaa-Gyaa-Haah": "configurations",
   "Hya-Hrah-Nyaa-Yah": "poison"
-}
+};
