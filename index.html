@@ -4,16 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Link Translator</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
     <div class="card">
-      <span class="version">v0.4</span>
-      <div class="header-row">
-        <img src="triforce.png" alt="left triforce" class="small-icon" />
+      <span class="version">v0.5</span>
+      <div class="header">
+        <img src="triforce.png" alt="icon" class="icon" />
         <h1>Link Translator</h1>
-        <img src="triforce.png" alt="right triforce" class="small-icon" />
+        <img src="triforce.png" alt="icon" class="icon" />
       </div>
       <select id="mode">
         <option value="eng-to-grunt">English → Grunt</option>
@@ -21,8 +21,15 @@
       </select>
       <textarea id="input" placeholder="Enter text here..."></textarea>
       <button id="translateBtn" class="translate">Translate</button>
-      <div id="output" class="output-box"></div>
-      <button id="copyBtn" class="copy-btn" title="Copy result">📋</button>
+
+      <div class="output-box">
+        <textarea id="outputText" readonly></textarea>
+        <button onclick="copyToClipboard()">📋 Copy</button>
+      </div>
+
+      <a href="https://github.com/ChimeraGaming/LOZ_Link_Translator/issues" class="github-link" target="_blank">
+        <img src="github-icon.png" alt="GitHub Issues" class="github-icon">
+      </a>
     </div>
   </div>
 
@@ -35,10 +42,10 @@
     function runTranslation() {
       const input = document.getElementById("input").value.trim().toLowerCase();
       const mode = document.getElementById("mode").value;
-      const outputDiv = document.getElementById("output");
+      const output = document.getElementById("outputText");
 
       if (!input) {
-        outputDiv.innerText = "Please enter something!";
+        output.value = "Please enter something!";
         return;
       }
 
@@ -47,30 +54,27 @@
         if (mode === "eng-to-grunt") {
           return gruntMap[word] || word;
         } else {
-          return Object.keys(gruntMap).find(key => gruntMap[key] === word) || word;
+          const entry = Object.entries(gruntMap).find(([key, val]) => val === word);
+          return entry ? entry[0] : word;
         }
       });
 
-      outputDiv.innerText = translated.join(" ");
+      output.value = translated.join(" ");
+    }
+
+    function copyToClipboard() {
+      const output = document.getElementById("outputText");
+      output.select();
+      output.setSelectionRange(0, 99999);
+      document.execCommand("copy");
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       const btn = document.getElementById("translateBtn");
-      const copyBtn = document.getElementById("copyBtn");
-
       btn.addEventListener("click", () => {
         btn.classList.add("clicked");
         setTimeout(() => btn.classList.remove("clicked"), 150);
         runTranslation();
-      });
-
-      copyBtn.addEventListener("click", () => {
-        const output = document.getElementById("output").innerText;
-        if (output) {
-          navigator.clipboard.writeText(output);
-          copyBtn.innerText = "✅";
-          setTimeout(() => copyBtn.innerText = "📋", 1500);
-        }
       });
     });
   </script>
