@@ -1,0 +1,59 @@
+body {
+  background: url('https://i.imgur.com/zKUQ4DO.png');
+  background-size: cover;
+  font-family: 'Segoe UI', sans-serif;
+  color: #2e2e2e;
+  text-align: center;
+  padding: 2rem;
+}
+
+.container {
+  background: rgba(255, 255, 245, 0.9);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: auto;
+  box-shadow: 0 0 20px #d4af37;
+}
+
+h1 {
+  color: #2e6d2c;
+  font-family: Georgia, serif;
+  margin-bottom: 1rem;
+}
+
+select, textarea, button {
+  margin-top: 1rem;
+  font-size: 1rem;
+  padding: 0.7rem;
+  width: 90%;
+  border-radius: 8px;
+  border: 2px solid #2e6d2c;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+button {
+  background: #2e6d2c;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #245424;
+}
+
+#output {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  background: #fffef0;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  word-wrap: break-word;
+}
