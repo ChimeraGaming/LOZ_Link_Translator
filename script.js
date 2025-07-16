@@ -16,8 +16,8 @@ Promise.all([
   alert("Failed to load grunt dictionaries. Please refresh or try again later.");
 });
 
-// Ensure translate function is globally accessible
-window.translate = function () {
+// Translation logic
+function runTranslation() {
   const input = document.getElementById("input").value.trim().toLowerCase();
   const mode = document.getElementById("mode").value;
   const outputDiv = document.getElementById("output");
@@ -41,4 +41,10 @@ window.translate = function () {
     const result = grunts.map(g => reverseMap[g] || "[??]").join(" ");
     outputDiv.innerText = result;
   }
-};
+}
+
+// Attach event listener when DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+  const button = document.getElementById("translateBtn");
+  button.addEventListener("click", runTranslation);
+});
