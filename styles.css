@@ -45,9 +45,11 @@ body {
 }
 
 .small-icon {
-  width: 32px;
-  height: 32px;
+  width: auto;
+  height: 1.5rem;
 }
+
+
 
 h1 {
   margin: 0;
