@@ -34,15 +34,15 @@ function runTranslation() {
 
   const words = input.split(/\s+/);
 
-  let result = words.map(word => {
+  const translated = words.map(word => {
     if (mode === "eng-to-grunt") {
-      return gruntMap[word] || word; // keep untranslated words
+      return gruntMap[word] || word;
     } else {
       return reverseMap[word] || word;
     }
-  }).join(" ");
+  });
 
-  outputDiv.innerText = result;
+  outputDiv.innerText = translated.join(" ");
 }
 
 document.addEventListener("DOMContentLoaded", () => {

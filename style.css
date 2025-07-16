@@ -1,18 +1,19 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #faf8e6;
+  background-color: #fefde9;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.container {
+.card {
   max-width: 500px;
   margin: 4rem auto;
   padding: 2rem;
-  background-color: #fffef5;
+  background-color: #fffdf4;
   border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
   text-align: center;
+  position: relative;
 }
 
 .version-tag {
@@ -26,20 +27,25 @@ body {
 }
 
 h1 {
-  margin-bottom: 1rem;
-  color: #215322;
+  margin-bottom: 1.5rem;
+  color: #1d3f1d;
   font-family: 'Georgia', serif;
   font-weight: bold;
 }
 
-select, textarea, button {
+select,
+textarea,
+button {
   width: 100%;
   margin-top: 0.75rem;
   padding: 0.75rem;
   font-size: 1rem;
   border-radius: 6px;
-  border: 1px solid #215322;
   font-family: inherit;
+}
+
+select, textarea {
+  border: 1px solid #3a5c3a;
 }
 
 textarea {
