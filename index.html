@@ -4,16 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Link Translator</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="container">
     <div class="card">
       <span class="version">v0.5</span>
-      <div class="header">
+      <div class="title-row">
         <img src="triforce.png" alt="icon" class="icon" />
         <h1>Link Translator</h1>
-        <img src="triforce.png" alt="icon" class="icon" />
+        <a href="https://github.com/ChimeraGaming/LOZ_Link_Translator/issues" target="_blank" class="github-link">
+          <img src="github.png" alt="GitHub Issues" class="github-icon" />
+        </a>
       </div>
       <select id="mode">
         <option value="eng-to-grunt">English → Grunt</option>
@@ -21,62 +23,15 @@
       </select>
       <textarea id="input" placeholder="Enter text here..."></textarea>
       <button id="translateBtn" class="translate">Translate</button>
-
       <div class="output-box">
-        <textarea id="outputText" readonly></textarea>
-        <button onclick="copyToClipboard()">📋 Copy</button>
+        <div id="output"></div>
+        <button id="copyBtn" class="copy-btn">Copy</button>
       </div>
-
-      <a href="https://github.com/ChimeraGaming/LOZ_Link_Translator/issues" class="github-link" target="_blank">
-        <img src="github-icon.png" alt="GitHub Issues" class="github-icon">
-      </a>
     </div>
   </div>
 
   <script src="grunt_map.js"></script>
   <script src="reverse_map.js"></script>
-  <script>
-    const gruntMap = GRUNT_MAP;
-    const reverseMap = REVERSE_MAP;
-
-    function runTranslation() {
-      const input = document.getElementById("input").value.trim().toLowerCase();
-      const mode = document.getElementById("mode").value;
-      const output = document.getElementById("outputText");
-
-      if (!input) {
-        output.value = "Please enter something!";
-        return;
-      }
-
-      const words = input.split(/\s+/);
-      const translated = words.map(word => {
-        if (mode === "eng-to-grunt") {
-          return gruntMap[word] || word;
-        } else {
-          const entry = Object.entries(gruntMap).find(([key, val]) => val === word);
-          return entry ? entry[0] : word;
-        }
-      });
-
-      output.value = translated.join(" ");
-    }
-
-    function copyToClipboard() {
-      const output = document.getElementById("outputText");
-      output.select();
-      output.setSelectionRange(0, 99999);
-      document.execCommand("copy");
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const btn = document.getElementById("translateBtn");
-      btn.addEventListener("click", () => {
-        btn.classList.add("clicked");
-        setTimeout(() => btn.classList.remove("clicked"), 150);
-        runTranslation();
-      });
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
