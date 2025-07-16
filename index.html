@@ -10,7 +10,11 @@
   <div class="container">
     <div class="card">
       <span class="version">v0.4</span>
-      <h1><img src="triforce.png" alt="" class="icon" />Link Translator</h1>
+      <h1>
+        <img src="triforce.png" alt="icon" class="icon-small" />
+        Link Translator
+        <img src="triforce.png" alt="icon" class="icon-small" />
+      </h1>
       <select id="mode">
         <option value="eng-to-grunt">English → Grunt</option>
         <option value="grunt-to-eng">Grunt → English</option>
@@ -39,11 +43,7 @@
 
       const words = input.split(/\s+/);
       const translated = words.map(word => {
-        if (mode === "eng-to-grunt") {
-          return gruntMap[word] || word;
-        } else {
-          return reverseMap[word] || word;
-        }
+        return mode === "eng-to-grunt" ? (gruntMap[word] || word) : (reverseMap[word] || word);
       });
 
       outputDiv.innerText = translated.join(" ");
