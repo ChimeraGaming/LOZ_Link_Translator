@@ -1,39 +1,66 @@
-const gruntMap = GRUNT_MAP;
-const reverseMap = REVERSE_MAP;
-
-function runTranslation() {
-  const input = document.getElementById("input").value.trim().toLowerCase();
-  const mode = document.getElementById("mode").value;
-  const outputDiv = document.getElementById("output");
-
-  if (!input) {
-    outputDiv.innerText = "Please enter something!";
-    return;
-  }
-
-  const words = input.split(/\s+/);
-  const translated = words.map(word => {
-    if (mode === "eng-to-grunt") {
-      return gruntMap[word] || word;
-    } else {
-      // Fix: Check for matching value in gruntMap and return its key
-      const match = Object.keys(gruntMap).find(key => gruntMap[key].toLowerCase() === word.toLowerCase());
-      return match || word;
-    }
-  });
-
-  outputDiv.innerText = translated.join(" ");
-}
+// Total translations counter (for future use)
+let totalTranslations = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("translateBtn").addEventListener("click", () => {
-    runTranslation();
+  const directionSelect = document.getElementById("directionSelect");
+  const inputText = document.getElementById("inputText");
+  const outputText = document.getElementById("outputText");
+  const translateButton = document.getElementById("translateButton");
+  const copyButton = document.getElementById("copyButton");
+
+  translateButton.addEventListener("click", () => {
+    const direction = directionSelect.value;
+    const input = inputText.value.trim();
+
+    let result = "";
+    if (direction === "english-to-grunt") {
+      result = translateEnglishToGrunt(input);
+    } else {
+      result = translateGruntToEnglish(input);
+    }
+
+    outputText.textContent = result;
+    totalTranslations++;
   });
 
-  document.getElementById("copyBtn").addEventListener("click", () => {
-    const output = document.getElementById("output").innerText;
-    navigator.clipboard.writeText(output).then(() => {
-      alert("Copied!");
+  copyButton.addEventListener("click", () => {
+    navigator.clipboard.writeText(outputText.textContent).then(() => {
+      copyButton.textContent = "Copied!";
+      setTimeout(() => {
+        copyButton.textContent = "Copy";
+      }, 1500);
     });
   });
 });
+
+function translateEnglishToGrunt(text) {
+  return text
+    .toLowerCase()
+    .split(/\s+/)
+    .map((word) => GRUNT_MAP[word] || word)
+    .join("-");
+}
+
+function translateGruntToEnglish(text) {
+  const words = text.trim().toLowerCase().split(/[\s\-]+/);
+  const matches = [];
+  let buffer = "";
+
+  const normalizedReverseMap = {};
+  for (const key in REVERSE_MAP) {
+    normalizedReverseMap[key.toLowerCase()] = REVERSE_MAP[key];
+  }
+
+  for (let i = 0; i < words.length; i++) {
+    buffer += (buffer ? "-" : "") + words[i];
+
+    if (normalizedReverseMap[buffer]) {
+      matches.push(normalizedReverseMap[buffer]);
+      buffer = "";
+    } else if (i === words.length - 1 && buffer) {
+      matches.push(buffer); // fallback for unmatched
+    }
+  }
+
+  return matches.join(" ");
+}
