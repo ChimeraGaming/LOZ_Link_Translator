@@ -1,20 +1,20 @@
+let mapsLoaded = false;
 let gruntMap = {};
 let reverseMap = {};
-let mapsLoaded = false;
 
-Promise.all([
-  fetch("./grunt_map.json").then(res => res.json()),
-  fetch("./reverse_map.json").then(res => res.json())
-])
-.then(([gruntData, reverseData]) => {
-  gruntMap = gruntData;
-  reverseMap = reverseData;
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof GRUNT_MAP === 'undefined' || typeof REVERSE_MAP === 'undefined') {
+    console.error("Dictionaries not loaded.");
+    alert("Failed to load grunt dictionaries. Please refresh or try again later.");
+    return;
+  }
+
+  gruntMap = GRUNT_MAP;
+  reverseMap = REVERSE_MAP;
   mapsLoaded = true;
   console.log("Maps loaded.");
-})
-.catch(err => {
-  console.error("Error loading JSON files:", err);
-  alert("Failed to load grunt dictionaries. Please refresh or try again later.");
+
+  document.getElementById("translateBtn").addEventListener("click", runTranslation);
 });
 
 function runTranslation() {
@@ -23,7 +23,7 @@ function runTranslation() {
   const outputDiv = document.getElementById("output");
 
   if (!mapsLoaded) {
-    outputDiv.innerText = "Grunt dictionaries are still loading. Please try again in a few seconds.";
+    outputDiv.innerText = "Grunt dictionaries are still loading. Please try again.";
     return;
   }
 
@@ -44,7 +44,3 @@ function runTranslation() {
 
   outputDiv.innerText = translated.join(" ");
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("translateBtn").addEventListener("click", runTranslation);
-});
