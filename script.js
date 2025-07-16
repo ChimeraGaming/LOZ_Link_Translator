@@ -16,7 +16,7 @@ Promise.all([
   alert("Failed to load grunt dictionaries. Please refresh or try again later.");
 });
 
-// ✅ EXPLICITLY attach function to window for HTML onclick access
+// Ensure translate function is globally accessible
 window.translate = function () {
   const input = document.getElementById("input").value.trim().toLowerCase();
   const mode = document.getElementById("mode").value;
