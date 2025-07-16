@@ -4,17 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Link Translator</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="container">
     <div class="card">
       <span class="version">v0.4</span>
-      <h1>
-        <img src="triforce.png" alt="icon" class="icon-small" />
-        Link Translator
-        <img src="triforce.png" alt="icon" class="icon-small" />
-      </h1>
+      <div class="header-row">
+        <img src="triforce.png" alt="left triforce" class="small-icon" />
+        <h1>Link Translator</h1>
+        <img src="triforce.png" alt="right triforce" class="small-icon" />
+      </div>
       <select id="mode">
         <option value="eng-to-grunt">English → Grunt</option>
         <option value="grunt-to-eng">Grunt → English</option>
@@ -22,6 +22,7 @@
       <textarea id="input" placeholder="Enter text here..."></textarea>
       <button id="translateBtn" class="translate">Translate</button>
       <div id="output" class="output-box"></div>
+      <button id="copyBtn" class="copy-btn" title="Copy result">📋</button>
     </div>
   </div>
 
@@ -43,7 +44,11 @@
 
       const words = input.split(/\s+/);
       const translated = words.map(word => {
-        return mode === "eng-to-grunt" ? (gruntMap[word] || word) : (reverseMap[word] || word);
+        if (mode === "eng-to-grunt") {
+          return gruntMap[word] || word;
+        } else {
+          return Object.keys(gruntMap).find(key => gruntMap[key] === word) || word;
+        }
       });
 
       outputDiv.innerText = translated.join(" ");
@@ -51,10 +56,21 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       const btn = document.getElementById("translateBtn");
+      const copyBtn = document.getElementById("copyBtn");
+
       btn.addEventListener("click", () => {
         btn.classList.add("clicked");
         setTimeout(() => btn.classList.remove("clicked"), 150);
         runTranslation();
+      });
+
+      copyBtn.addEventListener("click", () => {
+        const output = document.getElementById("output").innerText;
+        if (output) {
+          navigator.clipboard.writeText(output);
+          copyBtn.innerText = "✅";
+          setTimeout(() => copyBtn.innerText = "📋", 1500);
+        }
       });
     });
   </script>
