@@ -1,27 +1,30 @@
 let gruntMap = {};
 let reverseMap = {};
+let mapsLoaded = false;
 
-// GitHub Pages: relative path JSON loads
-fetch("./grunt_map.json")
-  .then(res => res.json())
-  .then(data => {
-    gruntMap = data;
-    console.log("Grunt map loaded");
-  })
-  .catch(err => console.error("Failed to load grunt_map.json", err));
-
-fetch("./reverse_map.json")
-  .then(res => res.json())
-  .then(data => {
-    reverseMap = data;
-    console.log("Reverse map loaded");
-  })
-  .catch(err => console.error("Failed to load reverse_map.json", err));
+// Load JSON maps
+Promise.all([
+  fetch("./grunt_map.json").then(res => res.json()),
+  fetch("./reverse_map.json").then(res => res.json())
+]).then(([gruntData, reverseData]) => {
+  gruntMap = gruntData;
+  reverseMap = reverseData;
+  mapsLoaded = true;
+  console.log("Maps loaded.");
+}).catch(err => {
+  console.error("Error loading JSON files:", err);
+  alert("Failed to load grunt dictionaries. Please refresh or try again later.");
+});
 
 function translate() {
   const input = document.getElementById("input").value.trim().toLowerCase();
   const mode = document.getElementById("mode").value;
   const outputDiv = document.getElementById("output");
+
+  if (!mapsLoaded) {
+    outputDiv.innerText = "Grunt dictionaries are still loading. Please try again in a few seconds.";
+    return;
+  }
 
   if (!input) {
     outputDiv.innerText = "Please enter something!";
