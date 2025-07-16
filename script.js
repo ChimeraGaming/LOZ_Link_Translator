@@ -2,7 +2,7 @@ let gruntMap = {};
 let reverseMap = {};
 let mapsLoaded = false;
 
-// Load JSON maps
+// Load both JSON maps
 Promise.all([
   fetch("./grunt_map.json").then(res => res.json()),
   fetch("./reverse_map.json").then(res => res.json())
@@ -16,7 +16,8 @@ Promise.all([
   alert("Failed to load grunt dictionaries. Please refresh or try again later.");
 });
 
-function translate() {
+// ✅ EXPLICITLY attach function to window for HTML onclick access
+window.translate = function () {
   const input = document.getElementById("input").value.trim().toLowerCase();
   const mode = document.getElementById("mode").value;
   const outputDiv = document.getElementById("output");
@@ -40,4 +41,4 @@ function translate() {
     const result = grunts.map(g => reverseMap[g] || "[??]").join(" ");
     outputDiv.innerText = result;
   }
-}
+};
