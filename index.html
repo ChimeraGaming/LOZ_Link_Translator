@@ -20,13 +20,10 @@
       <div id="output" class="output"></div>
     </div>
   </div>
-  
+
   <script src="grunt_map.js"></script>
   <script src="reverse_map.js"></script>
   <script>
-    const gruntMap = GRUNT_MAP;
-    const reverseMap = REVERSE_MAP;
-
     function runTranslation() {
       const input = document.getElementById("input").value.trim().toLowerCase();
       const mode = document.getElementById("mode").value;
@@ -40,9 +37,9 @@
       const words = input.split(/\s+/);
       const translated = words.map(word => {
         if (mode === "eng-to-grunt") {
-          return gruntMap[word] || word;
+          return GRUNT_MAP[word] || word;
         } else {
-          return reverseMap[word] || word;
+          return REVERSE_MAP[word] || word;
         }
       });
 

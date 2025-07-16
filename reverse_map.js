@@ -1,4 +1,4 @@
-const reverseMap = {
+window.REVERSE_MAP = {
   "Wah-Hyaa-Hrah-Hut": "the",
   "Ho-Tyaa-Ugh-Haah": "and",
   "Heeyah-Hrah-Hya-Hut": "for",

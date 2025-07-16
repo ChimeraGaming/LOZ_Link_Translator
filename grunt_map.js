@@ -1,4 +1,4 @@
-const gruntMap = {
+window.GRUNT_MAP = {
   "the": "Wah-Hyaa-Hrah-Hut",
   "and": "Ho-Tyaa-Ugh-Haah",
   "for": "Heeyah-Hrah-Hya-Hut",

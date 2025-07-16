@@ -1,5 +1,3 @@
-// script.js
-
 function runTranslation() {
   const input = document.getElementById("input").value.trim().toLowerCase();
   const mode = document.getElementById("mode").value;
