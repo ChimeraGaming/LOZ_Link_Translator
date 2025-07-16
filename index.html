@@ -8,22 +8,25 @@
 </head>
 <body>
   <div class="container">
-    <span class="version">v0.3</span>
     <div class="card">
-      <h1><img src="triforce.svg" alt="" class="icon" />Link Translator</h1>
+      <span class="version">v0.4</span>
+      <h1><img src="triforce.png" alt="" class="icon" />Link Translator</h1>
       <select id="mode">
         <option value="eng-to-grunt">English → Grunt</option>
         <option value="grunt-to-eng">Grunt → English</option>
       </select>
       <textarea id="input" placeholder="Enter text here..."></textarea>
       <button id="translateBtn" class="translate">Translate</button>
-      <div id="output" class="output"></div>
+      <div id="output" class="output-box"></div>
     </div>
   </div>
 
   <script src="grunt_map.js"></script>
   <script src="reverse_map.js"></script>
   <script>
+    const gruntMap = GRUNT_MAP;
+    const reverseMap = REVERSE_MAP;
+
     function runTranslation() {
       const input = document.getElementById("input").value.trim().toLowerCase();
       const mode = document.getElementById("mode").value;
@@ -37,9 +40,9 @@
       const words = input.split(/\s+/);
       const translated = words.map(word => {
         if (mode === "eng-to-grunt") {
-          return GRUNT_MAP[word] || word;
+          return gruntMap[word] || word;
         } else {
-          return REVERSE_MAP[word] || word;
+          return reverseMap[word] || word;
         }
       });
 
