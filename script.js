@@ -1,14 +1,22 @@
 let gruntMap = {};
 let reverseMap = {};
 
-// Load both maps on page load
-fetch("grunt_map.json")
-  .then((res) => res.json())
-  .then((data) => (gruntMap = data));
+// GitHub Pages: relative path JSON loads
+fetch("./grunt_map.json")
+  .then(res => res.json())
+  .then(data => {
+    gruntMap = data;
+    console.log("Grunt map loaded");
+  })
+  .catch(err => console.error("Failed to load grunt_map.json", err));
 
-fetch("reverse_map.json")
-  .then((res) => res.json())
-  .then((data) => (reverseMap = data));
+fetch("./reverse_map.json")
+  .then(res => res.json())
+  .then(data => {
+    reverseMap = data;
+    console.log("Reverse map loaded");
+  })
+  .catch(err => console.error("Failed to load reverse_map.json", err));
 
 function translate() {
   const input = document.getElementById("input").value.trim().toLowerCase();
@@ -22,15 +30,11 @@ function translate() {
 
   if (mode === "eng-to-grunt") {
     const words = input.split(/\s+/);
-    const result = words
-      .map((w) => gruntMap[w] || `[??]`)
-      .join(" ");
+    const result = words.map(w => gruntMap[w] || "[??]").join(" ");
     outputDiv.innerText = result;
   } else {
     const grunts = input.split(/\s+/);
-    const result = grunts
-      .map((g) => reverseMap[g] || `[??]`)
-      .join(" ");
+    const result = grunts.map(g => reverseMap[g] || "[??]").join(" ");
     outputDiv.innerText = result;
   }
 }
