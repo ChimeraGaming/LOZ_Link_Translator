@@ -41,6 +41,11 @@
       <button id="translateButton" class="translate">Translate</button>
       <div id="outputText" class="output-box"></div>
       <button id="copyButton" class="copy-btn">Copy</button>
+
+      <!-- Easter egg hint -->
+      <p style="font-size: 0.75rem; color: #888; margin-top: 8px;">
+        Some translations... unlock more than just words.
+      </p>
     </div>
   </div>
 
@@ -50,12 +55,13 @@
   <script src="grunt_map.js"></script>
   <script src="reverse_map.js"></script>
   <script src="script.js"></script>
+
   <script>
     // Make Navi follow the cursor
     const navi = document.getElementById("navi-cursor");
     document.addEventListener("mousemove", (e) => {
-      navi.style.left = `${e.pageX}px`;
-      navi.style.top = `${e.pageY}px`;
+      navi.style.left = `${e.clientX}px`;
+      navi.style.top = `${e.clientY}px`;
     });
   </script>
 </body>
