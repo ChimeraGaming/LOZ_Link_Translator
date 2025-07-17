@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
         : translateGruntToEnglish(input);
 
     outputText.textContent = result;
-    document.getElementById("count-number").innerText = `${easterEggsFound}/2`;
+    document.getElementById("count-number").innerText = `Easter Eggs Found: ${easterEggsFound}/2`;
   });
 
   copyButton?.addEventListener("click", () => {
