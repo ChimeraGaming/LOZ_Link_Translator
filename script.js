@@ -42,10 +42,7 @@ const EASTER_EGGS = [
 ];
 
 function normalizeInput(text) {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z\s]/gi, "")
-    .trim();
+  return text.toLowerCase().replace(/[^a-z\s]/gi, "").trim();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -56,40 +53,40 @@ document.addEventListener("DOMContentLoaded", () => {
   const copyButton = document.getElementById("copyButton");
   const darkToggle = document.getElementById("toggleDarkMode");
   const darkIcon = document.getElementById("darkModeIcon");
+  const countDisplay = document.getElementById("count-number");
 
   directionSelect?.addEventListener("change", () => {
-    console.log(
-      `[Link Translator] Switched direction to: ${directionSelect.value}`
-    );
+    console.log(`[Link Translator] Switched direction to: ${directionSelect.value}`);
   });
 
   translateButton?.addEventListener("click", () => {
     const direction = directionSelect.value;
     const input = inputText.value.trim();
     const normalized = normalizeInput(input);
-
     let override = null;
+
     EASTER_EGGS.forEach(({ triggers, action, overrideText, id }) => {
-      if (triggers.some((trigger) => normalizeInput(input).includes(normalizeInput(trigger)))) {
+      const matched = triggers.some(
+        (trigger) => normalized.includes(normalizeInput(trigger))
+      );
+      if (matched) {
         if (!foundEggs.has(id)) {
           foundEggs.add(id);
           easterEggsFound++;
-          document.getElementById("count-number").innerText = `${easterEggsFound}/2`;
+          countDisplay.innerText = `${easterEggsFound}/2`;
         }
         action();
         override = overrideText;
       }
-
     });
 
     const result = override
       ? override
       : direction === "english-to-grunt"
-        ? translateEnglishToGrunt(input)
-        : translateGruntToEnglish(input);
+      ? translateEnglishToGrunt(input)
+      : translateGruntToEnglish(input);
 
     outputText.textContent = result;
-    document.getElementById("count-number").innerText = `Easter Eggs Found: ${easterEggsFound}/2`;
   });
 
   copyButton?.addEventListener("click", () => {
