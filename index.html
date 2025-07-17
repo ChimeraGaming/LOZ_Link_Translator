@@ -6,6 +6,19 @@
   <title>Link Translator</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="favicon.png" type="image/png" sizes="32x32" />
+  <style>
+    body {
+      cursor: none;
+    }
+    #navi-cursor {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      width: 32px;
+      height: 32px;
+      transform: translate(-50%, -50%);
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -30,6 +43,9 @@
           Total Translations:
           <div id="count-number">0</div>
         </div>
+        <p style="font-size: 0.75rem; color: #888; margin-top: 8px;">
+          Some translations... unlock more than just words.
+        </p>
       </div>
 
       <select id="directionSelect">
@@ -41,15 +57,9 @@
       <button id="translateButton" class="translate">Translate</button>
       <div id="outputText" class="output-box"></div>
       <button id="copyButton" class="copy-btn">Copy</button>
-
-      <!-- Easter egg hint -->
-      <p style="font-size: 0.75rem; color: #888; margin-top: 8px;">
-        Some translations... unlock more than just words.
-      </p>
     </div>
   </div>
 
-  <!-- Navi Cursor -->
   <img id="navi-cursor" src="navi-cursor.gif" alt="Navi Cursor" />
 
   <script src="grunt_map.js"></script>
@@ -57,7 +67,6 @@
   <script src="script.js"></script>
 
   <script>
-    // Make Navi follow the cursor
     const navi = document.getElementById("navi-cursor");
     document.addEventListener("mousemove", (e) => {
       navi.style.left = `${e.clientX}px`;

@@ -1,9 +1,62 @@
 let totalTranslations = 0;
 
-// Normalize REVERSE_MAP once for reverse translation
-const normalizedReverseMap = {};
-for (const key in REVERSE_MAP) {
-  normalizedReverseMap[key.toLowerCase()] = REVERSE_MAP[key];
+const EASTER_EGGS = [
+  {
+    triggers: [
+      "alone",
+      "i'm alone",
+      "i am alone",
+      "im alone",
+      "alone...",
+      "alone.",
+      "alone!",
+      "I'm alone",
+      "I'm alone.",
+      "Alone"
+    ],
+    action: () => {
+      document.body.style.backgroundImage =
+        "url('https://ibb.co/CKVTNBWy')";
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundPosition = "center";
+      document.body.style.backgroundRepeat = "no-repeat";
+    },
+  },
+  {
+    triggers: [
+      "dangerous to go alone",
+      "it's dangerous to go alone",
+      "its dangerous to go alone",
+      "It’s dangerous to go alone",
+      "It's dangerous to go alone!",
+      "it's dangerous to go alone!",
+      "dangerous to go alone!"
+    ],
+    action: () => {
+      alert("Take this.");
+    },
+  },
+  {
+    triggers: [
+      "hey listen",
+      "Hey Listen",
+      "HEY LISTEN",
+      "Hey, listen",
+      "hey, listen!",
+      "hey, listen",
+      "hey! listen!"
+    ],
+    action: () => {
+      alert("HEY! LISTEN!");
+    },
+  },
+];
+
+function normalizeInput(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z\s]/gi, "")
+    .trim();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -16,7 +69,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const darkIcon = document.getElementById("darkModeIcon");
 
   directionSelect?.addEventListener("change", () => {
-    console.log(`[Link Translator] Switched direction to: ${directionSelect.value}`);
+    console.log(
+      `[Link Translator] Switched direction to: ${directionSelect.value}`
+    );
   });
 
   translateButton?.addEventListener("click", () => {
@@ -34,13 +89,12 @@ document.addEventListener("DOMContentLoaded", () => {
     totalTranslations++;
     document.getElementById("count-number").innerText = totalTranslations;
 
-    // Easter egg: background change if input is exactly "alone"
-    if (input.toLowerCase() === "alone") {
-      document.body.style.backgroundImage = "url('https://i.ibb.co/CKVTNBW/alone-bg.png')";
-      document.body.style.backgroundSize = "cover";
-      document.body.style.backgroundRepeat = "no-repeat";
-      document.body.style.backgroundPosition = "center";
-    }
+    const normalized = normalizeInput(input);
+    EASTER_EGGS.forEach(({ triggers, action }) => {
+      if (triggers.some((trigger) => normalized.includes(normalizeInput(trigger)))) {
+        action();
+      }
+    });
   });
 
   copyButton?.addEventListener("click", () => {
@@ -70,6 +124,11 @@ function translateGruntToEnglish(text) {
   const words = text.trim().toLowerCase().split(/[\s\-]+/);
   const matches = [];
   let buffer = "";
+
+  const normalizedReverseMap = {};
+  for (const key in REVERSE_MAP) {
+    normalizedReverseMap[key.toLowerCase()] = REVERSE_MAP[key];
+  }
 
   for (let i = 0; i < words.length; i++) {
     buffer += (buffer ? "-" : "") + words[i];
