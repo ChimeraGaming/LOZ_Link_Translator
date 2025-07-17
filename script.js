@@ -1,4 +1,3 @@
-// Total translations counter (for future use)
 let totalTranslations = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -7,8 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const outputText = document.getElementById("outputText");
   const translateButton = document.getElementById("translateButton");
   const copyButton = document.getElementById("copyButton");
+  const darkToggle = document.getElementById("darkModeToggle");
 
-  // Log when translation direction is changed
   directionSelect.addEventListener("change", () => {
     console.log(`[Link Translator] Switched direction to: ${directionSelect.value}`);
   });
@@ -28,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     outputText.textContent = result;
     totalTranslations++;
+    document.getElementById("count-number").innerText = totalTranslations;
     console.log(`[Link Translator] Total translations so far: ${totalTranslations}`);
   });
 
@@ -38,6 +38,10 @@ document.addEventListener("DOMContentLoaded", () => {
         copyButton.textContent = "Copy";
       }, 1500);
     });
+  });
+
+  darkToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
   });
 });
 
@@ -66,7 +70,7 @@ function translateGruntToEnglish(text) {
       matches.push(normalizedReverseMap[buffer]);
       buffer = "";
     } else if (i === words.length - 1 && buffer) {
-      matches.push(buffer); // fallback for unmatched
+      matches.push(buffer); // fallback
     }
   }
 

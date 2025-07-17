@@ -41,6 +41,12 @@ body.dark .card {
   margin-bottom: 12px;
 }
 
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .version {
   font-size: 0.75rem;
   color: #444;
@@ -52,6 +58,14 @@ body.dark .card {
 body.dark .version {
   background-color: #3a3a3a;
   color: #ddd;
+}
+
+#darkModeToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: inherit;
 }
 
 .github-icon {
@@ -83,8 +97,8 @@ body.dark .title-text {
 }
 
 .icon-small {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   margin: 0 6px;
   vertical-align: middle;
   image-rendering: crisp-edges;
@@ -151,24 +165,25 @@ textarea {
   background-color: #f3f3f3;
   border: 1px solid #bbb;
   cursor: pointer;
-  position: relative;
 }
 
-.copy-btn::after {
-  content: "Copied!";
-  position: absolute;
-  top: -30px;
-  right: 10px;
+body.dark .copy-btn {
   background-color: #333;
-  color: white;
-  padding: 3px 8px;
-  font-size: 0.75rem;
-  border-radius: 4px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
+  border-color: #666;
 }
 
-.copy-btn.show-feedback::after {
-  opacity: 1;
+.output-box {
+  background-color: #fafafa;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  min-height: 50px;
+  white-space: pre-wrap;
+  color: #000;
+}
+
+body.dark .output-box {
+  background-color: #333;
+  border-color: #666;
+  color: #eee;
 }
