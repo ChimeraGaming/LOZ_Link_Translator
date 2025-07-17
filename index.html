@@ -11,10 +11,11 @@
   <div class="container">
     <div class="card">
       <div class="card-header">
-        <span class="version">v1.0</span>
+        <span class="version">v1.1</span>
         <a href="https://github.com/ChimeraGaming/LOZ_Link_Translator/issues" target="_blank">
           <img src="github.png" alt="GitHub Issues" class="icon-small github-icon" />
         </a>
+        <button id="toggleDarkMode" class="toggle-mode">🌓</button>
       </div>
 
       <div class="title-container">
@@ -89,11 +90,22 @@
 
       document.getElementById("copyBtn").addEventListener("click", () => {
         const outputText = document.getElementById("output").innerText;
-        navigator.clipboard.writeText(outputText);
+        navigator.clipboard.writeText(outputText).then(() => {
+          const btn = document.getElementById("copyBtn");
+          const originalText = btn.textContent;
+          btn.textContent = "Copied!";
+          setTimeout(() => {
+            btn.textContent = originalText;
+          }, 1500);
+        });
       });
 
       document.getElementById("mode").addEventListener("change", e => {
         console.log(`Switched mode to: ${e.target.value}`);
+      });
+
+      document.getElementById("toggleDarkMode").addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
       });
     });
   </script>
