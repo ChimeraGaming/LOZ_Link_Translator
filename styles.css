@@ -117,4 +117,11 @@ select, textarea {
   border: 1px solid #ccc;
   border-radius: 6px;
   white-space: pre-wrap;
+  position: relative;
+}
+
+.total-counter {
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  color: #444;
 }

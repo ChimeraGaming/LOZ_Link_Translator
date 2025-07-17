@@ -5,21 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Link Translator</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
   <div class="container">
     <div class="card">
       <div class="card-header">
         <span class="version">v0.5</span>
-        <h1 class="title">
-          <img src="triforce.png" class="triforce-icon" />
-          Link Translator
-          <img src="triforce.png" class="triforce-icon" />
+        <h1>
+          <img src="triforce.png" alt="" class="icon-small" />
+          <span class="title-text">Link Translator</span>
+          <img src="triforce.png" alt="" class="icon-small" />
+          <a href="https://github.com/ChimeraGaming/LOZ_Link_Translator/issues" target="_blank">
+            <img src="github.png" alt="GitHub Issues" class="icon-small github-icon" />
+          </a>
         </h1>
-        <a href="https://github.com/ChimeraGaming/LOZ_Link_Translator/issues" target="_blank">
-          <img src="github.png" alt="GitHub" class="github-icon" />
-        </a>
+        <div id="translation-count" class="translation-count">Total Translations: 0</div>
       </div>
 
       <select id="mode">
@@ -28,12 +29,9 @@
       </select>
 
       <textarea id="input" placeholder="Enter text here..."></textarea>
-
       <button id="translateBtn" class="translate">Translate</button>
-
       <div id="output" class="output-box"></div>
-
-      <button id="copyBtn">Copy</button>
+      <button id="copyBtn" class="copy-btn">Copy</button>
     </div>
   </div>
 
@@ -42,12 +40,15 @@
   <script>
     const gruntMap = GRUNT_MAP;
     const reverseMap = REVERSE_MAP;
-    let totalTranslations = 0;
+
+    let translationCount = 0;
 
     function runTranslation() {
-      const input = document.getElementById("input").value.trim().toLowerCase();
+      const input = document.getElementById("input").value.trim();
       const mode = document.getElementById("mode").value;
       const outputDiv = document.getElementById("output");
+
+      console.log(`Translation mode: ${mode}`);
 
       if (!input) {
         outputDiv.innerText = "Please enter something!";
@@ -57,31 +58,35 @@
       const words = input.split(/\s+/);
       const translated = words.map(word => {
         if (mode === "eng-to-grunt") {
-          return gruntMap[word] || word;
+          return gruntMap[word.toLowerCase()] || word;
         } else {
-          return reverseMap[word] || word;
+          return Object.keys(reverseMap).find(k => k.toLowerCase() === word.toLowerCase())
+            ? reverseMap[word.toLowerCase()] : word;
         }
       });
 
-      const result = translated.join(" ");
-      outputDiv.innerText = result;
-
-      totalTranslations += 1;
+      outputDiv.innerText = translated.join(" ");
+      translationCount++;
+      document.getElementById("translation-count").innerText = `Total Translations: ${translationCount}`;
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      const btn = document.getElementById("translateBtn");
+      const translateBtn = document.getElementById("translateBtn");
       const copyBtn = document.getElementById("copyBtn");
 
-      btn.addEventListener("click", () => {
-        btn.classList.add("clicked");
-        setTimeout(() => btn.classList.remove("clicked"), 150);
+      translateBtn.addEventListener("click", () => {
+        translateBtn.classList.add("clicked");
+        setTimeout(() => translateBtn.classList.remove("clicked"), 150);
         runTranslation();
       });
 
       copyBtn.addEventListener("click", () => {
-        const output = document.getElementById("output").innerText;
-        navigator.clipboard.writeText(output);
+        const outputText = document.getElementById("output").innerText;
+        navigator.clipboard.writeText(outputText);
+      });
+
+      document.getElementById("mode").addEventListener("change", e => {
+        console.log(`Switched mode to: ${e.target.value}`);
       });
     });
   </script>

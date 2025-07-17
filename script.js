@@ -8,19 +8,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const translateButton = document.getElementById("translateButton");
   const copyButton = document.getElementById("copyButton");
 
+  // Log when translation direction is changed
+  directionSelect.addEventListener("change", () => {
+    console.log(`[Link Translator] Switched direction to: ${directionSelect.value}`);
+  });
+
   translateButton.addEventListener("click", () => {
     const direction = directionSelect.value;
     const input = inputText.value.trim();
-
     let result = "";
+
     if (direction === "english-to-grunt") {
+      console.log(`[Link Translator] Translating English → Grunt: "${input}"`);
       result = translateEnglishToGrunt(input);
     } else {
+      console.log(`[Link Translator] Translating Grunt → English: "${input}"`);
       result = translateGruntToEnglish(input);
     }
 
     outputText.textContent = result;
     totalTranslations++;
+    console.log(`[Link Translator] Total translations so far: ${totalTranslations}`);
   });
 
   copyButton.addEventListener("click", () => {
