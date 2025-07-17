@@ -41,12 +41,6 @@ body.dark .card {
   margin-bottom: 12px;
 }
 
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .version {
   font-size: 0.75rem;
   color: #444;
@@ -60,12 +54,10 @@ body.dark .version {
   color: #ddd;
 }
 
-#darkModeToggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-  color: inherit;
+.toggle-mode img {
+  width: 20px;
+  height: 20px;
+  transition: opacity 0.3s ease;
 }
 
 .github-icon {

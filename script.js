@@ -6,32 +6,30 @@ document.addEventListener("DOMContentLoaded", () => {
   const outputText = document.getElementById("outputText");
   const translateButton = document.getElementById("translateButton");
   const copyButton = document.getElementById("copyButton");
-  const darkToggle = document.getElementById("darkModeToggle");
+  const darkToggle = document.getElementById("toggleDarkMode");
+  const darkIcon = document.getElementById("darkModeIcon");
 
-  directionSelect.addEventListener("change", () => {
+  directionSelect?.addEventListener("change", () => {
     console.log(`[Link Translator] Switched direction to: ${directionSelect.value}`);
   });
 
-  translateButton.addEventListener("click", () => {
+  translateButton?.addEventListener("click", () => {
     const direction = directionSelect.value;
     const input = inputText.value.trim();
     let result = "";
 
     if (direction === "english-to-grunt") {
-      console.log(`[Link Translator] Translating English → Grunt: "${input}"`);
       result = translateEnglishToGrunt(input);
     } else {
-      console.log(`[Link Translator] Translating Grunt → English: "${input}"`);
       result = translateGruntToEnglish(input);
     }
 
     outputText.textContent = result;
     totalTranslations++;
     document.getElementById("count-number").innerText = totalTranslations;
-    console.log(`[Link Translator] Total translations so far: ${totalTranslations}`);
   });
 
-  copyButton.addEventListener("click", () => {
+  copyButton?.addEventListener("click", () => {
     navigator.clipboard.writeText(outputText.textContent).then(() => {
       copyButton.textContent = "Copied!";
       setTimeout(() => {
@@ -40,8 +38,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  darkToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
+  darkToggle?.addEventListener("click", () => {
+    const isDark = document.body.classList.toggle("dark");
+    darkIcon.src = isDark ? "sun.png" : "moon.png";
   });
 });
 
@@ -70,7 +69,7 @@ function translateGruntToEnglish(text) {
       matches.push(normalizedReverseMap[buffer]);
       buffer = "";
     } else if (i === words.length - 1 && buffer) {
-      matches.push(buffer); // fallback
+      matches.push(buffer);
     }
   }
 
