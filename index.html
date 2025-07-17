@@ -11,19 +11,22 @@
   <div class="container">
     <div class="card">
       <div class="card-header">
-        <span class="version">v0.5.2</span>
-        <div class="title">
-          <img src="triforce.png" alt="icon" class="icon-small" />
-          <span class="title-text">Link Translator</span>
-          <img src="triforce.png" alt="icon" class="icon-small" />
-        </div>
-        <div class="translation-count">
-          Total Translations:
-          <div id="translation-count-value">0</div>
-        </div>
+        <span class="version">v0.5.3</span>
         <a href="https://github.com/ChimeraGaming/LOZ_Link_Translator/issues" target="_blank">
-          <img src="github.png" alt="GitHub" class="icon-small github-icon" />
+          <img src="github.png" alt="GitHub Issues" class="icon-small github-icon" />
         </a>
+      </div>
+
+      <div class="title-container">
+        <h1>
+          <img src="triforce.png" alt="" class="icon-small" />
+          <span class="title-text">Link Translator</span>
+          <img src="triforce.png" alt="" class="icon-small" />
+        </h1>
+        <div id="translation-count" class="translation-count">
+          Total Translations:
+          <div id="count-number">0</div>
+        </div>
       </div>
 
       <select id="mode">
@@ -57,37 +60,34 @@
         return;
       }
 
+      const words = input.split(/\s+/);
       let translated = [];
 
       if (mode === "eng-to-grunt") {
-        const words = input.split(/\s+/);
-        translated = words.map(word =>
-          gruntMap[word.toLowerCase()] || word
-        );
-        outputDiv.innerText = translated.join("-");
+        translated = words.map(word => gruntMap[word.toLowerCase()] || word);
       } else {
-        const gruntWords = input.split(/[\s\-]+/); // split by space or hyphen
-        translated = gruntWords.map(grunt =>
-          reverseMap[grunt.toLowerCase()] || grunt
-        );
-        outputDiv.innerText = translated.join(" ");
+        translated = words.map(word => {
+          const lowerWord = word.toLowerCase();
+          const foundEntry = Object.entries(reverseMap).find(
+            ([key]) => key.toLowerCase() === lowerWord
+          );
+          return foundEntry ? foundEntry[1] : word;
+        });
       }
 
+      outputDiv.innerText = translated.join(" ");
       translationCount++;
-      document.getElementById("translation-count-value").innerText = translationCount;
+      document.getElementById("count-number").innerText = translationCount;
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      const translateBtn = document.getElementById("translateBtn");
-      const copyBtn = document.getElementById("copyBtn");
-
-      translateBtn.addEventListener("click", () => {
-        translateBtn.classList.add("clicked");
-        setTimeout(() => translateBtn.classList.remove("clicked"), 150);
+      document.getElementById("translateBtn").addEventListener("click", () => {
+        document.getElementById("translateBtn").classList.add("clicked");
+        setTimeout(() => document.getElementById("translateBtn").classList.remove("clicked"), 150);
         runTranslation();
       });
 
-      copyBtn.addEventListener("click", () => {
+      document.getElementById("copyBtn").addEventListener("click", () => {
         const outputText = document.getElementById("output").innerText;
         navigator.clipboard.writeText(outputText);
       });
