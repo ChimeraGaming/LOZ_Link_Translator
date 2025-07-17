@@ -4,7 +4,10 @@ body {
   overflow-x: hidden; /* Prevent horizontal scrollbar */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #fdfbe9;
-  transition: background-color 0.3s, color 0.3s;
+  background-size: cover; /* Ensures the easter egg background fills screen */
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-color 0.3s, color 0.3s, background-image 0.3s;
 }
 
 #navi-cursor {
@@ -141,7 +144,7 @@ textarea,
   background-color: #fff;
   color: #000;
   transition: background-color 0.3s, color 0.3s;
-  box-sizing: border-box; /* ✅ ensures no overflow */
+  box-sizing: border-box;
 }
 
 body.dark select,
@@ -190,7 +193,7 @@ body.dark .copy-btn {
   min-height: 50px;
   white-space: pre-wrap;
   color: #000;
-  overflow-wrap: break-word; /* ✅ prevents long word overflow */
+  overflow-wrap: break-word;
 }
 
 body.dark .output-box {

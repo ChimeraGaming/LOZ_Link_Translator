@@ -1,5 +1,11 @@
 let totalTranslations = 0;
 
+// Normalize REVERSE_MAP once for reverse translation
+const normalizedReverseMap = {};
+for (const key in REVERSE_MAP) {
+  normalizedReverseMap[key.toLowerCase()] = REVERSE_MAP[key];
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const directionSelect = document.getElementById("directionSelect");
   const inputText = document.getElementById("inputText");
@@ -27,6 +33,14 @@ document.addEventListener("DOMContentLoaded", () => {
     outputText.textContent = result;
     totalTranslations++;
     document.getElementById("count-number").innerText = totalTranslations;
+
+    // Easter egg: background change if input is exactly "alone"
+    if (input.toLowerCase() === "alone") {
+      document.body.style.backgroundImage = "url('https://i.ibb.co/CKVTNBW/alone-bg.png')";
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundRepeat = "no-repeat";
+      document.body.style.backgroundPosition = "center";
+    }
   });
 
   copyButton?.addEventListener("click", () => {
@@ -56,11 +70,6 @@ function translateGruntToEnglish(text) {
   const words = text.trim().toLowerCase().split(/[\s\-]+/);
   const matches = [];
   let buffer = "";
-
-  const normalizedReverseMap = {};
-  for (const key in REVERSE_MAP) {
-    normalizedReverseMap[key.toLowerCase()] = REVERSE_MAP[key];
-  }
 
   for (let i = 0; i < words.length; i++) {
     buffer += (buffer ? "-" : "") + words[i];

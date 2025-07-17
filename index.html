@@ -6,29 +6,12 @@
   <title>Link Translator</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="favicon.png" type="image/png" sizes="32x32" />
-
-  <style>
-    /* Hide default cursor */
-    body {
-      cursor: none;
-    }
-
-    /* Navi cursor style */
-    #navi-cursor {
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      width: 32px;
-      height: 32px;
-      transform: translate(-50%, -50%);
-    }
-  </style>
 </head>
 <body>
   <div class="container">
     <div class="card">
       <div class="card-header">
-        <span class="version">v1.4</span>
+        <span class="version">v1.5</span>
         <a href="https://github.com/ChimeraGaming/LOZ_Link_Translator/issues" target="_blank">
           <img src="github.png" alt="GitHub Issues" class="icon-small github-icon" />
         </a>
@@ -67,13 +50,12 @@
   <script src="grunt_map.js"></script>
   <script src="reverse_map.js"></script>
   <script src="script.js"></script>
-
   <script>
     // Make Navi follow the cursor
     const navi = document.getElementById("navi-cursor");
     document.addEventListener("mousemove", (e) => {
-      navi.style.left = `${e.clientX}px`;
-      navi.style.top = `${e.clientY}px`;
+      navi.style.left = `${e.pageX}px`;
+      navi.style.top = `${e.pageY}px`;
     });
   </script>
 </body>
