@@ -4,23 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Link Translator</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="favicon.png" />
 </head>
 <body>
   <div class="container">
     <div class="card">
       <div class="card-header">
-        <span class="version">v0.5.1</span>
-        <h1 class="title">
-          <img src="triforce.png" alt="Triforce" class="triforce-icon" />
+        <span class="version">v0.5.2</span>
+        <div class="title">
+          <img src="triforce.png" alt="icon" class="icon-small" />
           <span class="title-text">Link Translator</span>
-          <img src="triforce.png" alt="Triforce" class="triforce-icon" />
-          <a href="https://github.com/ChimeraGaming/LOZ_Link_Translator/issues" target="_blank">
-            <img src="github.png" alt="GitHub Issues" class="github-icon" />
-          </a>
-        </h1>
-        <div id="translation-count" class="translation-count">Total Translations: 0</div>
+          <img src="triforce.png" alt="icon" class="icon-small" />
+        </div>
+        <div class="translation-count">
+          Total Translations:
+          <div id="translation-count-value">0</div>
+        </div>
+        <a href="https://github.com/ChimeraGaming/LOZ_Link_Translator/issues" target="_blank">
+          <img src="github.png" alt="GitHub" class="icon-small github-icon" />
+        </a>
       </div>
 
       <select id="mode">
@@ -40,7 +43,6 @@
   <script>
     const gruntMap = GRUNT_MAP;
     const reverseMap = REVERSE_MAP;
-
     let translationCount = 0;
 
     function runTranslation() {
@@ -55,19 +57,24 @@
         return;
       }
 
-      const words = input.split(/\s+/);
-      const translated = words.map(word => {
-        if (mode === "eng-to-grunt") {
-          return gruntMap[word.toLowerCase()] || word;
-        } else {
-          return Object.keys(reverseMap).find(k => k.toLowerCase() === word.toLowerCase())
-            ? reverseMap[word.toLowerCase()] : word;
-        }
-      });
+      let translated = [];
 
-      outputDiv.innerText = translated.join(" ");
+      if (mode === "eng-to-grunt") {
+        const words = input.split(/\s+/);
+        translated = words.map(word =>
+          gruntMap[word.toLowerCase()] || word
+        );
+        outputDiv.innerText = translated.join("-");
+      } else {
+        const gruntWords = input.split(/[\s\-]+/); // split by space or hyphen
+        translated = gruntWords.map(grunt =>
+          reverseMap[grunt.toLowerCase()] || grunt
+        );
+        outputDiv.innerText = translated.join(" ");
+      }
+
       translationCount++;
-      document.getElementById("translation-count").innerText = `Total Translations: ${translationCount}`;
+      document.getElementById("translation-count-value").innerText = translationCount;
     }
 
     document.addEventListener("DOMContentLoaded", () => {
