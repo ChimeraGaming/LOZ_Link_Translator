@@ -1,28 +1,9 @@
-let totalTranslations = 0;
+let easterEggsFound = 0;
+const foundEggs = new Set();
 
 const EASTER_EGGS = [
   {
-    triggers: [
-      "alone",
-      "i'm alone",
-      "i am alone",
-      "im alone",
-      "alone...",
-      "alone.",
-      "alone!",
-      "I'm alone",
-      "I'm alone.",
-      "Alone"
-    ],
-    action: () => {
-      document.body.style.backgroundImage =
-        "url('https://ibb.co/CKVTNBWy')";
-      document.body.style.backgroundSize = "cover";
-      document.body.style.backgroundPosition = "center";
-      document.body.style.backgroundRepeat = "no-repeat";
-    },
-  },
-  {
+    id: "dangerous",
     triggers: [
       "dangerous to go alone",
       "it's dangerous to go alone",
@@ -34,9 +15,16 @@ const EASTER_EGGS = [
     ],
     action: () => {
       alert("Take this.");
+      document.body.style.backgroundImage =
+        "url('https://i.ibb.co/TMPFpcrG/image.png')";
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundPosition = "center";
+      document.body.style.backgroundRepeat = "no-repeat";
     },
+    overrideText: "Take this 🗡️"
   },
   {
+    id: "hey-listen",
     triggers: [
       "hey listen",
       "Hey Listen",
@@ -49,7 +37,8 @@ const EASTER_EGGS = [
     action: () => {
       alert("HEY! LISTEN!");
     },
-  },
+    overrideText: "✨ You can't ignore me forever! ✨"
+  }
 ];
 
 function normalizeInput(text) {
@@ -77,24 +66,28 @@ document.addEventListener("DOMContentLoaded", () => {
   translateButton?.addEventListener("click", () => {
     const direction = directionSelect.value;
     const input = inputText.value.trim();
-    let result = "";
-
-    if (direction === "english-to-grunt") {
-      result = translateEnglishToGrunt(input);
-    } else {
-      result = translateGruntToEnglish(input);
-    }
-
-    outputText.textContent = result;
-    totalTranslations++;
-    document.getElementById("count-number").innerText = totalTranslations;
-
     const normalized = normalizeInput(input);
-    EASTER_EGGS.forEach(({ triggers, action }) => {
+
+    let override = null;
+    EASTER_EGGS.forEach(({ triggers, action, overrideText, id }) => {
       if (triggers.some((trigger) => normalized.includes(normalizeInput(trigger)))) {
+        if (!foundEggs.has(id)) {
+          foundEggs.add(id);
+          easterEggsFound++;
+        }
         action();
+        override = overrideText;
       }
     });
+
+    const result = override
+      ? override
+      : direction === "english-to-grunt"
+        ? translateEnglishToGrunt(input)
+        : translateGruntToEnglish(input);
+
+    outputText.textContent = result;
+    document.getElementById("count-number").innerText = `${easterEggsFound}/2`;
   });
 
   copyButton?.addEventListener("click", () => {
