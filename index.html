@@ -44,8 +44,19 @@
     </div>
   </div>
 
+  <!-- Navi Cursor -->
+  <img id="navi-cursor" src="navi-cursor.gif" alt="Navi Cursor" />
+
   <script src="grunt_map.js"></script>
   <script src="reverse_map.js"></script>
   <script src="script.js"></script>
+  <script>
+    // Make Navi follow the cursor
+    document.addEventListener("mousemove", (e) => {
+      const navi = document.getElementById("navi-cursor");
+      navi.style.left = `${e.pageX}px`;
+      navi.style.top = `${e.pageY}px`;
+    });
+  </script>
 </body>
 </html>

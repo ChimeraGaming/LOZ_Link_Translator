@@ -1,14 +1,25 @@
+body {
+  cursor: none; /* Hide default pointer */
+  margin: 0;
+  overflow-x: hidden; /* Prevent horizontal scrollbar */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fdfbe9;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#navi-cursor {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  width: 32px;
+  height: 32px;
+  transform: translate(-50%, -50%);
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fdfbe9;
-  transition: background-color 0.3s, color 0.3s;
 }
 
 body.dark {
@@ -130,6 +141,7 @@ textarea,
   background-color: #fff;
   color: #000;
   transition: background-color 0.3s, color 0.3s;
+  box-sizing: border-box; /* ✅ ensures no overflow */
 }
 
 body.dark select,
@@ -178,6 +190,7 @@ body.dark .copy-btn {
   min-height: 50px;
   white-space: pre-wrap;
   color: #000;
+  overflow-wrap: break-word; /* ✅ prevents long word overflow */
 }
 
 body.dark .output-box {
