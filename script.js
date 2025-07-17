@@ -70,14 +70,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let override = null;
     EASTER_EGGS.forEach(({ triggers, action, overrideText, id }) => {
-      if (triggers.some((trigger) => normalized.includes(normalizeInput(trigger)))) {
+      if (triggers.some((trigger) => normalizeInput(input).includes(normalizeInput(trigger)))) {
         if (!foundEggs.has(id)) {
           foundEggs.add(id);
           easterEggsFound++;
+          document.getElementById("count-number").innerText = `${easterEggsFound}/2`;
         }
         action();
         override = overrideText;
       }
+
     });
 
     const result = override
